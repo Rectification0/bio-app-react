@@ -5,84 +5,96 @@ import InputForm from './components/InputForm'
 import HistoryView from './components/HistoryView'
 import Guide from './components/Guide'
 
+/**
+ * Tab type definition for navigation
+ */
 type Tab = 'dashboard' | 'input' | 'history' | 'guide'
 
+/**
+ * Main application component for NutriSense Soil Analysis
+ * 
+ * Provides a tabbed interface with:
+ * - Dashboard: Overview of soil analysis results
+ * - Analyze Soil: Input form for new soil samples
+ * - History: Historical analysis records
+ * - Guide: User guide and documentation
+ */
 function App() {
+  // Active tab state management
   const [activeTab, setActiveTab] = useState<Tab>('dashboard')
+  
+  // Refresh trigger to force dashboard re-render after new analysis
   const [refreshTrigger, setRefreshTrigger] = useState(0)
 
+  /**
+   * Callback handler when soil analysis is completed
+   * Switches to dashboard and triggers a refresh to show new data
+   */
   const handleAnalysisComplete = () => {
     setActiveTab('dashboard')
     setRefreshTrigger(prev => prev + 1)
   }
 
+  // Navigation tab configuration
   const tabs = [
     { id: 'dashboard' as Tab, label: 'Dashboard', icon: Activity },
-    { id: 'input' as Tab, label: 'Input', icon: Sprout },
+    { id: 'input' as Tab, label: 'Analyze Soil', icon: Sprout },
     { id: 'history' as Tab, label: 'History', icon: History },
     { id: 'guide' as Tab, label: 'Guide', icon: Info },
   ]
 
   return (
-    <div className="min-h-screen">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-blue-600 to-blue-800 shadow-2xl">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-2 flex items-center justify-center gap-3">
-              <Sprout className="w-10 h-10" />
-              NutriSense
-            </h1>
-            <p className="text-blue-100 text-lg">AI-Powered Soil Intelligence Platform</p>
-            <div className="flex items-center justify-center gap-6 mt-4 text-sm text-blue-200">
-              <span>🧪 Smart Analysis</span>
-              <span>🤖 AI Insights</span>
-              <span>📊 Real-time Data</span>
-            </div>
-          </div>
+    <div className="flex min-h-screen bg-slate-950 text-slate-200">
+      {/* Sidebar Navigation */}
+      <aside className="w-64 bg-slate-900 border-r border-slate-800 p-6 hidden md:flex flex-col">
+        {/* App Logo and Title */}
+        <div className="flex items-center gap-3 mb-10">
+          <Sprout className="w-8 h-8 text-green-500" />
+          <h1 className="text-xl font-bold">NutriSense</h1>
         </div>
-      </header>
 
-      {/* Navigation Tabs */}
-      <nav className="bg-slate-800/50 backdrop-blur-sm border-b border-slate-700 sticky top-0 z-10">
-        <div className="container mx-auto px-4">
-          <div className="flex gap-2">
-            {tabs.map((tab) => {
-              const Icon = tab.icon
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-all ${
-                    activeTab === tab.id
-                      ? 'bg-blue-600 text-white border-b-2 border-blue-400'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  {tab.label}
-                </button>
-              )
-            })}
-          </div>
+        {/* Navigation Tabs */}
+        <nav className="flex flex-col gap-2">
+          {tabs.map(tab => {
+            const Icon = tab.icon
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-sm ${
+                  activeTab === tab.id
+                    ? 'bg-green-600 text-white'
+                    : 'hover:bg-slate-800 text-slate-400 hover:text-white'
+                }`}
+              >
+                <Icon className="w-5 h-5" />
+                {tab.label}
+              </button>
+            )
+          })}
+        </nav>
+
+        {/* Version Info */}
+        <div className="mt-auto text-xs text-slate-500 pt-10">
+          AI Soil Intelligence v1.0
         </div>
-      </nav>
+      </aside>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        {activeTab === 'dashboard' && <Dashboard key={refreshTrigger} />}
-        {activeTab === 'input' && <InputForm onSuccess={handleAnalysisComplete} />}
-        {activeTab === 'history' && <HistoryView />}
-        {activeTab === 'guide' && <Guide />}
-      </main>
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col">
+        {/* Top Header Bar */}
+        <header className="h-16 border-b border-slate-800 flex items-center px-6 bg-slate-950">
+          <h2 className="text-lg font-semibold capitalize">{activeTab}</h2>
+        </header>
 
-      {/* Footer */}
-      <footer className="bg-slate-900 border-t border-slate-800 mt-16">
-        <div className="container mx-auto px-4 py-6 text-center text-slate-400 text-sm">
-          <p>NutriSense - AI Soil Intelligence Platform v1.0.0</p>
-          <p className="mt-2">Powered by FastAPI & React</p>
-        </div>
-      </footer>
+        {/* Dynamic Content Based on Active Tab */}
+        <main className="flex-1 p-6 bg-slate-950">
+          {activeTab === 'dashboard' && <Dashboard key={refreshTrigger} />}
+          {activeTab === 'input' && <InputForm onSuccess={handleAnalysisComplete} />}
+          {activeTab === 'history' && <HistoryView />}
+          {activeTab === 'guide' && <Guide />}
+        </main>
+      </div>
     </div>
   )
 }

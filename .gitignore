@@ -1,4 +1,6 @@
-# Python
+# ============================================
+# Python / Backend
+# ============================================
 __pycache__/
 *.py[cod]
 *$py.class
@@ -26,32 +28,12 @@ env/
 ENV/
 .venv
 
-# Environment Variables
-.env
-.env.local
-.env.*.local
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-backend/app/data/
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-
-# Logs
-logs/
-*.log
-log_analyzer.py
-log_monitor.py
-logging_config.py
-LOGGING_*.md
+# Python type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pyre/
 
 # Testing
 .pytest_cache/
@@ -59,19 +41,35 @@ LOGGING_*.md
 htmlcov/
 .tox/
 
-# FastAPI
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# Jupyter Notebook
+.ipynb_checkpoints
 
-# Node (for frontend)
+# ============================================
+# Environment Variables
+# ============================================
+.env
+.env.local
+.env.*.local
+*.local
+
+# ============================================
+# Database
+# ============================================
+*.db
+*.sqlite
+*.sqlite3
+backend/app/data/
+
+# ============================================
+# Node / Frontend
+# ============================================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# Frontend build
+# Frontend build artifacts
 frontend/dist/
 frontend/build/
 frontend/.next/
@@ -83,30 +81,44 @@ frontend/out/
 .turbo/
 .eslintcache
 
-# Temporary files
+# ============================================
+# IDE / Editors
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.bak
+*.backup
+
+# ============================================
+# Logs
+# ============================================
+logs/
+*.log
+log_analyzer.py
+log_monitor.py
+logging_config.py
+LOGGING_*.md
+
+# ============================================
+# Temporary Files
+# ============================================
 *.tmp
 *.temp
 .cache/
 
-# OS
-Thumbs.db
+# ============================================
+# Operating System
+# ============================================
 .DS_Store
+Thumbs.db
 
-# Editor backups
-*.bak
-*.backup
-
-# Python type checking
-.pytype/
-.pyre/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# Local development
-*.local
-
-# Package manager locks (optional - uncomment if needed)
+# ============================================
+# Package Manager Locks (optional)
+# ============================================
+# Uncomment if you want to ignore lock files
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
